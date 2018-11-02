@@ -1,0 +1,8 @@
+table input {
+  border-style: none;
+}
+
+.border-line-style {
+  cursor: pointer;
+  border-width: thick;
+}
