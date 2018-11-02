@@ -14,6 +14,11 @@ const TableHeader = (props) => {
                     </th>
                 )
             })}
+            <th scope="col" data-tip="Click here to remove this table" key={props.header.length}>
+                <div className="remove-table" onClick={props.removeTable}>
+                    <i className="fa fa-trash"/>
+                </div>
+            </th>
         </tr>
     </thead>)
 }

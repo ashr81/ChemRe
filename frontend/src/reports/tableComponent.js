@@ -1,11 +1,8 @@
 import React from 'react';
 import TableHeader from './tableHeader';
 import TableBody from './tableBody';
-
+// TODO:: Implementation of add and remove columns.
 const TableComponent = (props) => {
-
-    const ignoreTags = ["INPUT"];
-
     const onHeaderInputChange = (event, colIndex) => {
         let { widgetData } = props;
         const header = [...widgetData.header];
@@ -22,53 +19,49 @@ const TableComponent = (props) => {
         props.updateWidgetsData(widgetData, props.widgetPosition);
     }
 
-    const addRow = (event) => {
-        if(ignoreTags.includes(event.target.tagName)) return;
-        const rowIndex = parseInt(event.currentTarget.dataset.rowindex);
-        const prevIndex = rowIndex - 1;
-        const nextIndex = rowIndex + 1;
+    const addRow = (event, position) => {
+        const rowIndex = parseInt(event.currentTarget.parentElement.dataset.rowindex);
         let { widgetData } = props;
         const { body } = widgetData;
         const rowLength = props.widgetData.header.length;
         const rowData = Array(rowLength).join('.').split('.');
         const newWidgetData = {...widgetData}
-        if(prevIndex === -1)
-            body.splice(0, 0, rowData)
-        else {
-            body.splice(nextIndex, 0, rowData)
+        if(position === "above") {
+            // For zero index rowindex should be same.
+            body.splice(rowIndex ? rowIndex-1 : rowIndex, 0 , rowData);
+        } else if(position === "below") {
+            body.splice(rowIndex+1, 0 , rowData);
         }
         newWidgetData.body = body;
         props.updateWidgetsData(newWidgetData, props.widgetPosition)
     }
 
-    const addColumn = (prevIndex, presentIndex) => {
-        
-    }
-
-    const removeRow = (prevIndex, presentIndex) => {
-        
-    }
-
-    const removeColumn = (prevIndex, presentIndex) => {
-        
+    const removeRow = (event) => {
+        const rowIndex = parseInt(event.currentTarget.parentElement.dataset.rowindex);
+        let { widgetData } = props;
+        const { body } = widgetData;
+        const newWidgetData = {...widgetData}
+        body.splice(rowIndex, 1);
+        newWidgetData.body = body;
+        props.updateWidgetsData(newWidgetData, props.widgetPosition)
     }
 
     return(
-        <table className="table table-bordered">
-            <TableHeader
-                header={props.widgetData.header}
-                onHeaderInputChange={onHeaderInputChange}
-                addColumn={addColumn}
-            />
-            <TableBody
-                body={props.widgetData.body}
-                onInputChange={onInputChange}
-                addColumn={addColumn}
-                addRow={addRow}
-                removeColumn={removeColumn}
-                removeRow={removeRow}
-            />
-        </table>
+        <div className="table-div-wrapper">
+            <table className="table table-bordered" data-tableindex={props.widgetPosition}>
+                <TableHeader
+                    header={props.widgetData.header}
+                    onHeaderInputChange={onHeaderInputChange}
+                    removeTable={props.removeTable}
+                />
+                <TableBody
+                    body={props.widgetData.body}
+                    onInputChange={onInputChange}
+                    addRow={addRow}
+                    removeRow={removeRow}
+                />
+            </table>
+        </div>
     )
 }
 

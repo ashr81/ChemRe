@@ -6,3 +6,71 @@ table input {
   cursor: pointer;
   border-width: thick;
 }
+
+div.form-controls{
+  display: flex;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+.table-content {
+  margin: 20px 0;
+}
+
+.display-none {
+  display: none;
+}
+
+.display-inline {
+  display: inline;
+}
+
+.table-div-wrapper {
+  margin: 10px 0;
+}
+
+.page-heading {
+  text-align: center;
+}
+
+.DraftEditor-root {
+  width: 100%;
+  min-height: 50px;
+  border-style: groove;
+}
+
+.add-table-icon {
+  margin-top: -20px;
+  font-size: 40px;
+  color: #0062cc;
+  cursor: pointer;
+}
+
+.remove-table{
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.react-select-component {
+  margin: 20px 0;
+}
+
+.text-editor-style {
+  border-style: groove;
+  min-height: 100px;
+  width: 100%;
+}
+
+.form-submission {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -50px;
+}
+button.form-submission {
+  margin: 10px;
+}
+
+.m-r-20{
+  margin-right: 20px;
+}
