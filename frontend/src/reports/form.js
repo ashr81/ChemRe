@@ -17,9 +17,15 @@ export default class ReportFormComponent extends React.Component {
                 summary: EditorState.createEmpty(),
                 status: statusOptions[0]
             },
+            isLoading: !!props.reportId,
+            isError: false,
             widgetsData: [widgetData]
         }
         this.updateWidgetsData = this.updateWidgetsData.bind(this);
+    }
+
+    componentDidMount() {
+        
     }
 
     onStatusChange = (status) => {
