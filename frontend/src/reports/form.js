@@ -3,10 +3,11 @@ import TableComponent from './tableComponent';
 import { widgetData } from './dummyData';
 import { statusOptions, defaultTableData } from './config';
 import ReportsAPI from '../services/reports.api';
-// import { EditorState } from 'draft-js';
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import ReportInputComponent from './inputComponent';
 import LoaderComponent from '../utils/loaderComponent';
 import deepClone from '../utils/deepClone';
+import ErrorComponent from '../utils/errorComponent';
 
 export default class ReportFormComponent extends React.Component {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class ReportFormComponent extends React.Component {
                 experiment_number: '',
                 scientist_name: '',
                 technician_name: '',
-                //summary: EditorState.createEmpty(),
+                summary: EditorState.createEmpty(),
                 status: statusOptions[0]
             },
             isLoading: !!props.reportId,
@@ -40,6 +41,8 @@ export default class ReportFormComponent extends React.Component {
                 content: { header: widget.header, body: widget.body }
             }
         })
+        let { summary } = report;
+        report.summary = convertToRaw(summary.getCurrentContent())
 
         ReportsAPI.create({
             id: this.props.reportId,
@@ -72,8 +75,9 @@ export default class ReportFormComponent extends React.Component {
                 body: widget.content.body
             }
         });
+        const summary = response.summary ? EditorState.createWithContent(convertFromRaw(response.summary)) : EditorState.createEmpty();
         this.setState({
-            report: { record_number, experiment_number, scientist_name, technician_name, status },
+            report: { record_number, experiment_number, scientist_name, technician_name, status, summary },
             widgetsData,
             isLoading: false
         })
@@ -97,7 +101,6 @@ export default class ReportFormComponent extends React.Component {
         }
     }
 
-
     componentDidMount() {
         this.fetchMasterData();
     }
@@ -111,7 +114,7 @@ export default class ReportFormComponent extends React.Component {
     onReportEditorTextChange = (summary) => {
         const { report } = this.state;
         report.summary = summary;
-        // this.setState({ report });
+        this.setState({ report });
     }
 
     onReportTextChange = (event) => {
@@ -122,9 +125,8 @@ export default class ReportFormComponent extends React.Component {
 
     updateWidgetsData = (newWidgetData, index) => {
         const { widgetsData } = this.state;
-        const newWidgetsData = [...widgetsData.slice(0, index),
-            newWidgetData,
-            ...widgetsData.slice(index, -1)]
+        const newWidgetsData = [...widgetsData]
+        newWidgetsData[index] = newWidgetData;
         this.setState({
             widgetsData: newWidgetsData
         })
@@ -185,7 +187,7 @@ export default class ReportFormComponent extends React.Component {
         if(this.state.isLoading) {
             return <LoaderComponent />
         } else if(this.state.isError) {
-            return(<div>Something wrong happened. please reload the page.</div>)
+            return(<ErrorComponent/>)
         } else {
             return(<div className="container">
                     <h4 className="page-heading">Experiment Valuation Sheet</h4>

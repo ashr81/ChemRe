@@ -12,3 +12,6 @@ export const defaultTableData = {
         [2, "Hydrogen Chloride", "20", "100", "0.2"]
     ]
 }
+
+export const BASE_URL = "https://chemre-backend.herokuapp.com"
+// "http://localhost:3000"

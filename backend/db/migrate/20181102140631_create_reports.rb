@@ -7,7 +7,7 @@ class CreateReports < ActiveRecord::Migration[5.2]
       t.string :scientist_name
       t.string :technician_name
       t.integer :status
-      t.text :summary
+      t.json :summary
       t.timestamps
     end
   end

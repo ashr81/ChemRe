@@ -5,7 +5,7 @@ const TextField = (props) => {
         <div className="form-group row">
                 <label className="col-sm-2 col-form-label">{props.label}</label>
                 <div className="col-sm-10">
-                    <input type={props.type && "text"}
+                    <input type={props.type ? props.type : "text"}
                         value={props.value}
                         onChange={props.onTextChange}
                         className="form-control"

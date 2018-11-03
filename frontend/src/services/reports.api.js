@@ -1,10 +1,13 @@
 import { ajaxCall } from '../utils/ajaxUtils';
+import { BASE_URL } from '../reports/config';
+
 export default class ReportsAPI {
-    static BASE_URL = "https://chemre-backend.herokuapp.com"
     static fetch(reportId, onSuccess, onFailure) {
-        const settings = {
-            url: `${ReportsAPI.BASE_URL}/reports/${reportId}`
+        let url = `${BASE_URL}/reports`
+        if(reportId) {
+            url = `${BASE_URL}/reports/${reportId}`
         }
+        const settings = { url }
         ajaxCall(settings, (response) => {
             onSuccess(response)
         }, (errorResponse) => {
@@ -15,13 +18,13 @@ export default class ReportsAPI {
     static create(requestData, onSuccess, onFailure) {
         const { payload } = requestData
         let settings = {
-            url: `${ReportsAPI.BASE_URL}/reports`,
+            url: `${BASE_URL}/reports`,
             method: "POST",
             data: JSON.stringify(payload)
         }
         if(requestData.id) {
             settings = Object.assign(settings, {
-                url: `${ReportsAPI.BASE_URL}/reports/${requestData.id}`,
+                url: `${BASE_URL}/reports/${requestData.id}`,
                 method: "PUT"
             })
         }
@@ -34,7 +37,7 @@ export default class ReportsAPI {
 
     static destroyWidget(reportId, widgetId, onSuccess, onFailure) {
         let settings = {
-            url: `${ReportsAPI.BASE_URL}/reports/${reportId}/report_widgets/${widgetId}`,
+            url: `${BASE_URL}/reports/${reportId}/report_widgets/${widgetId}`,
             method: "DELETE",
         }
         ajaxCall(settings)
