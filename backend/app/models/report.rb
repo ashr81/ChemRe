@@ -1,5 +1,5 @@
 class Report < ApplicationRecord
-    has_many :report_widgets
+    has_many :report_widgets, dependent: :destroy
     accepts_nested_attributes_for :report_widgets, allow_destroy: true
 
     enum status: {

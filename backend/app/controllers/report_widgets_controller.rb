@@ -9,7 +9,7 @@ class ReportWidgetsController < ApplicationController
     end
 
     def destroy
-        report_widget = ReportWidget.find(params[:id])
+        report_widget = Report.find(params[:report_id]).report_widgets.find(params[:id])
         render json: {success: report_widget.destroy}
     end
 end

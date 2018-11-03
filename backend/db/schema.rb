@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2018_11_02_140635) do
     t.string "scientist_name"
     t.string "technician_name"
     t.integer "status"
+    t.text "summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

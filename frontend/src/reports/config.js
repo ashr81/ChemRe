@@ -1,5 +1,5 @@
 export const statusOptions = [
-    {value: 'inProgress', label: "In Progress"},
+    {value: 'in_progress', label: "In Progress"},
     {value: 'success', label: 'Success'},
     {value: 'failure', label: 'Failure'}
 ]

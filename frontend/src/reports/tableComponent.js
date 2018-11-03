@@ -1,6 +1,7 @@
 import React from 'react';
 import TableHeader from './tableHeader';
 import TableBody from './tableBody';
+import deepClone from '../utils/deepClone';
 // TODO:: Implementation of add and remove columns.
 const TableComponent = (props) => {
     const onHeaderInputChange = (event, colIndex) => {
@@ -13,7 +14,7 @@ const TableComponent = (props) => {
 
     const onInputChange = (event, rowIndex, colIndex) => {
         let { widgetData } = props;
-        const body = JSON.parse(JSON.stringify(widgetData.body));
+        const body = deepClone(widgetData.body);
         body[rowIndex][colIndex] = event.currentTarget.value;
         widgetData.body = body;
         props.updateWidgetsData(widgetData, props.widgetPosition);
@@ -22,7 +23,7 @@ const TableComponent = (props) => {
     const addRow = (event, position) => {
         const rowIndex = parseInt(event.currentTarget.parentElement.dataset.rowindex);
         let { widgetData } = props;
-        const { body } = widgetData;
+        const { body } = deepClone(widgetData);
         const rowLength = props.widgetData.header.length;
         const rowData = Array(rowLength).join('.').split('.');
         const newWidgetData = {...widgetData}
@@ -39,7 +40,7 @@ const TableComponent = (props) => {
     const removeRow = (event) => {
         const rowIndex = parseInt(event.currentTarget.parentElement.dataset.rowindex);
         let { widgetData } = props;
-        const { body } = widgetData;
+        const { body } = deepClone(widgetData);
         const newWidgetData = {...widgetData}
         body.splice(rowIndex, 1);
         newWidgetData.body = body;

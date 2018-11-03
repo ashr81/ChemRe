@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
     end
 
     def show
-        render json: Report.find(params[:id])
+        render json: Report.find(params[:id]).as_json(include: :report_widgets)
     end
 
     def new
