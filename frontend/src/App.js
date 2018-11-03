@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "./App.css"
 import 'font-awesome/css/font-awesome.min.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import ReactTooltip from 'react-tooltip'
 import ReportFormComponent from './reports/form';
 import ReportComponent from './reports';
 
@@ -23,7 +22,6 @@ class App extends Component {
           <Route exact path="/reports"
             component={ReportComponent}
           />
-          <ReactTooltip />
         </Fragment>
       </Router>
     );

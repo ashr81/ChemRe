@@ -7,6 +7,7 @@ import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import ReportInputComponent from './inputComponent';
 import LoaderComponent from '../utils/loaderComponent';
 import deepClone from '../utils/deepClone';
+import ReactTooltip from 'react-tooltip'
 import ErrorComponent from '../utils/errorComponent';
 
 export default class ReportFormComponent extends React.Component {
@@ -177,7 +178,7 @@ export default class ReportFormComponent extends React.Component {
 
     addNewTableView = () => {
         return(
-            <div className="add-table-icon" onClick={this.addTable}>
+            <div className="add-table-icon" data-tip="Click to add new table" onClick={this.addTable}>
                 <i className="fa fa-plus-square" aria-hidden="true"></i>
             </div>
         )
@@ -201,6 +202,7 @@ export default class ReportFormComponent extends React.Component {
                         <button type="button" className="btn btn-info m-r-20">Create Template</button>
                         <button type="button" className="btn btn-primary" onClick={this.onSubmit}>Save</button>
                     </div>
+                    <ReactTooltip />
                 </div>)
         }
     }
